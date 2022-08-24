@@ -26,4 +26,44 @@ router.post("/upload", userAuth,upload.single('image'),async (req, res) => {
 });
 
 
+router.get("/all", userAuth, async(req, res) => {
+
+  try{
+    const images = await Image.find({userId: req.userId}).select("url").skip(req.query.page * 20)
+      .limit(20);
+    return res.status(200).json({
+      success: true,
+      images
+    });
+  }catch(error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      msg: error.message
+    });
+  }
+  
+});
+
+router.get("/", userAuth, async(req, res) => {
+
+  try{
+    console.log(req.query.filter);
+    const images = await Image.find({userId: req.userId, tags: req.query.filter}).select("url").skip(req.query.page * 20) .limit(20);
+    return res.status(200).json({
+      success: true,
+      images
+    });
+  }catch(error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      msg: error.message
+    });
+  }
+  
+});
+
+
+
 module.exports = router;
