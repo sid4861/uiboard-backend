@@ -3,7 +3,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const initializeDatabase = require("./database/db.connect.js");
 
-const whitelistRouter = require("./routes/whitelist.route.js");
+const waitlistRouter = require("./routes/waitlist.route.js");
+const userRouter = require("./routes/user.route.js")
 
 const port = process.env.port || 3000;
 
@@ -26,7 +27,8 @@ app.use((req, res, next) => {
 
 });
 
-app.use("/whitelist", whitelistRouter);
+app.use("/waitlist", waitlistRouter);
+app.use("/user", userRouter);
 
 app.get("/", async (req, res) => {
   res.status(200).json({

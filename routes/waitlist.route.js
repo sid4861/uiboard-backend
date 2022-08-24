@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Whitelist = require("../database/models/whitelist.model.js");
+const Waitlist = require("../database/models/waitlist.model.js");
 
 
 router.route("/")
@@ -16,11 +16,11 @@ router.route("/")
     });
   }
   try{
-    const foundEmail = await Whitelist.findOne({email: email});
+    const foundEmail = await Waitlist.findOne({email: email});
     if(foundEmail === null){
-      const newWhitelist = new Whitelist({email});
+      const newWaitlist = new Waitlist({email});
       try{
-        const savedWhitelist = await newWhitelist.save();
+        const savedWaitlist = await newWaitlist.save();
          return res.status(201).json({
         success: true
       });
