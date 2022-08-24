@@ -7,6 +7,7 @@ const waitlistRouter = require("./routes/waitlist.route.js");
 const userRouter = require("./routes/user.route.js")
 const imageRouter = require("./routes/image.route.js");
 const interactionRouter = require("./routes/interaction.route.js");
+const collectionRouter = require("./routes/collection.route.js");
 
 const port = process.env.port || 3000;
 
@@ -33,6 +34,7 @@ app.use("/waitlist", waitlistRouter);
 app.use("/user", userRouter);
 app.use("/image", imageRouter);
 app.use("/interaction", interactionRouter);
+app.use("/collection", collectionRouter);
 
 app.get("/", async (req, res) => {
   res.status(200).json({
