@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
 const interactionSchema = new mongoose.Schema({
-  s3: String,
+  url: String,
   userId: {
      type: mongoose.Schema.Types.ObjectId,
      ref: "User"
-  }
+  },
+  tags: [{
+    type: String
+}]
 }, { strict: false, timestamps: true });
 
 const Interaction = mongoose.model("Interaction", interactionSchema);

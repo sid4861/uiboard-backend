@@ -14,7 +14,7 @@ let uploadFile = async (file) => {
     var uploadParams = {
       ACL: "public-read",
       Bucket: process.env.AWS_BUCKET_IMAGE,
-      Key: file.originalname,
+      Key: Date.now()+"-"+file.originalname,
       Body: file.buffer,
     };
     s3.upload(uploadParams, function (err, data) {
@@ -27,3 +27,6 @@ let uploadFile = async (file) => {
     });
   });
 };
+
+
+module.exports = {uploadFile}

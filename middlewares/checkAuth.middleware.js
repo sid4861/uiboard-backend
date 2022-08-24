@@ -1,4 +1,4 @@
-const {jwt} = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const userAuth = async (req, res, next) => {
     try {
@@ -14,12 +14,12 @@ const userAuth = async (req, res, next) => {
             return res.status(403).json({ success: false, msg: `Invalid authentication token in request` });
         }
 
-        req.userId=decoded;
-        next()l
+        req.userId=decoded.userId;
+        next();
     } catch (error) {
         console.error(`Error! ${error.message}`)
        return res.status(500).json({ success: false, msg: error.message })
     }
 }
 
-module.exports = userAuth
+module.exports = {userAuth};

@@ -5,6 +5,8 @@ const initializeDatabase = require("./database/db.connect.js");
 
 const waitlistRouter = require("./routes/waitlist.route.js");
 const userRouter = require("./routes/user.route.js")
+const imageRouter = require("./routes/image.route.js");
+const interactionRouter = require("./routes/interaction.route.js");
 
 const port = process.env.port || 3000;
 
@@ -29,6 +31,8 @@ app.use((req, res, next) => {
 
 app.use("/waitlist", waitlistRouter);
 app.use("/user", userRouter);
+app.use("/image", imageRouter);
+app.use("/interaction", interactionRouter);
 
 app.get("/", async (req, res) => {
   res.status(200).json({
