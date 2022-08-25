@@ -52,9 +52,19 @@ router.get("/data", userAuth, async (req, res) => {
 router.get("/", userAuth, async (req, res) => {
   try{
     const collections = await Collection.find({userId: req.userId});
+    console.log(collections);
+    const collectionsMediaCount = await Promise.all([...collections].map(async (collection) => {
+      const collectionId = collection._id;
+      const images = await Image.find({collections: collectionId});
+      const interactions = await Interaction.find({collections: collectionId});
+      const data = [...images, ...interactions];
+      const newCollection = JSON.parse(JSON.stringify(collection));
+      newCollection.mediaCount = data.length;
+      return newCollection;
+    }))
     return res.status(200).json({
       success: true,
-      collections
+      collection: collectionsMediaCount
     })
   }catch(error) {
     console.log(error);
