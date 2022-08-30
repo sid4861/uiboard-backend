@@ -7,6 +7,8 @@ const {uploadFile} = require('../utils/aws.js');
 const Image = require("../database/models/image.model.js");
 const Collection = require("../database/models/collection.model.js");
 
+
+//comment
 router.post("/upload", userAuth,upload.single('image'),async (req, res) => {
   
   try {
