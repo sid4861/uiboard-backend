@@ -28,7 +28,7 @@ router.post("/", userAuth,async (req, res) => {
 });
 
 
-router.get("/data", userAuth, async (req, res) => {
+router.get("/data", async (req, res) => {
   try{
       const collectionId = req.query.id;
       const images = await Image.find({collections: collectionId});
