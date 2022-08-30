@@ -29,7 +29,7 @@ router.post("/upload", userAuth,upload.single('image'),async (req, res) => {
 router.get("/all", userAuth, async(req, res) => {
 
   try{
-    const images = await Image.find({userId: req.userId}).select("url, tags").skip(req.query.page * 5)
+    const images = await Image.find({userId: req.userId}).select({url:1, tags:1}).skip(req.query.page * 5)
       .limit(5);
     return res.status(200).json({
       success: true,
@@ -49,7 +49,7 @@ router.get("/", userAuth, async(req, res) => {
 
   try{
     console.log(req.query.filter);
-    const images = await Image.find({userId: req.userId, tags: req.query.filter}).select("url, tags").skip(req.query.page * 20) .limit(20);
+    const images = await Image.find({userId: req.userId, tags: req.query.filter}).select({url:1, tags:1}).skip(req.query.page * 20) .limit(20);
     return res.status(200).json({
       success: true,
       images
