@@ -31,13 +31,15 @@ router.post("/", userAuth,async (req, res) => {
 router.get("/data", async (req, res) => {
   try{
       const collectionId = req.query.id;
+      const collection = await Collection.findById(collectionId);
       const images = await Image.find({collections: collectionId});
       const interactions = await Interaction.find({collections: collectionId});
       const data = [...images, ...interactions];
 
       return res.status(200).json({
         success: true,
-        media:data
+        media:data,
+        collection
       });
     
   }catch(error) {
