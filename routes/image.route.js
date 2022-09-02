@@ -31,11 +31,14 @@ router.post("/upload", userAuth,upload.single('image'),async (req, res) => {
 router.get("/all", userAuth, async(req, res) => {
 
   try{
-    const images = await Image.find({userId: req.userId}).select({url:1, tags:1}).skip(req.query.page * 5)
-      .limit(5);
+    const allImages = await Image.find({userId: req.userId});
+    const images = await Image.find({userId: req.userId}).select({url:1, tags:1}).skip(req.query.page * 10)
+      .limit(10);
+    const noOfPages = Math.ceil(allImages.length / 10);
     return res.status(200).json({
       success: true,
-      images
+      images,
+      noOfPages
     });
   }catch(error) {
     console.log(error);
@@ -50,11 +53,13 @@ router.get("/all", userAuth, async(req, res) => {
 router.get("/", userAuth, async(req, res) => {
 
   try{
-    console.log(req.query.filter);
-    const images = await Image.find({userId: req.userId, tags: req.query.filter}).select({url:1, tags:1}).skip(req.query.page * 20) .limit(20);
+        const allImages = await Image.find({userId: req.userId});
+    const images = await Image.find({userId: req.userId, tags: req.query.filter}).select({url:1, tags:1}).skip(req.query.page * 10) .limit(10);
+    const noOfPages = Math.ceil(allImages.length / 10);
     return res.status(200).json({
       success: true,
-      images
+      images,
+      noOfPages
     });
   }catch(error) {
     console.log(error);
@@ -74,7 +79,7 @@ router.post("/add-to-collection", userAuth, async(req, res) => {
     console.log(foundCollection);
     await Image.findByIdAndUpdate(
         imageId,
-        {$push: {"collections": foundCollection[0]._id}},
+        {$addToSet: {"collections": foundCollection[0]._id}},
         {safe: true, upsert: true, new : true}
     );
     return res.status(200).json({

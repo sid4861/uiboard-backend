@@ -10,6 +10,10 @@ const interactionSchema = new mongoose.Schema({
      type: mongoose.Schema.Types.ObjectId,
      ref: "Collection"
   }],
+  mediaType: {
+    type: String,
+    default:"video"
+  },
   tags: [{
     type: String
 }]
