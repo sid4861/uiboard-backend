@@ -32,7 +32,7 @@ router.get("/all", userAuth, async(req, res) => {
 
   try{
     const allImages = await Image.find({userId: req.userId});
-    const images = await Image.find({userId: req.userId}).select({url:1, tags:1}).skip(req.query.page * 10)
+    const images = await Image.find({userId: req.userId}).select({url:1, tags:1, mediaType:1}).skip(req.query.page * 10)
       .limit(10);
     const noOfPages = Math.ceil(allImages.length / 10);
     return res.status(200).json({
@@ -54,7 +54,7 @@ router.get("/", userAuth, async(req, res) => {
 
   try{
         const allImages = await Image.find({userId: req.userId});
-    const images = await Image.find({userId: req.userId, tags: req.query.filter}).select({url:1, tags:1}).skip(req.query.page * 10) .limit(10);
+    const images = await Image.find({userId: req.userId, tags: req.query.filter}).select({url:1, tags:1, mediaType:1}).skip(req.query.page * 10) .limit(10);
     const noOfPages = Math.ceil(allImages.length / 10);
     return res.status(200).json({
       success: true,
